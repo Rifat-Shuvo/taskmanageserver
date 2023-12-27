@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000;
 app.use(cors())
 app.use(express.json())
 
+// https://server-task-three.vercel.app/
 
 //mongodb connection
 
@@ -44,7 +45,39 @@ async function run() {
             res.send(result)
         })
 
-
+        app.patch('/ongoing/:id', async(req, res)=>{
+            const id = req.params.id
+            const filter = {_id: new ObjectId(id)}
+            const updateddoc = {
+                $set:{
+                    status: 'ongoing'
+                }
+            }
+            const result = await alltask.updateOne(filter, updateddoc)
+            res.send(result)
+        })
+        app.patch('/completed/:id', async(req, res)=>{
+            const id = req.params.id
+            const filter = {_id: new ObjectId(id)}
+            const updateddoc = {
+                $set:{
+                    status: 'completed'
+                }
+            }
+            const result = await alltask.updateOne(filter, updateddoc)
+            res.send(result)
+        })
+        app.patch('/todo/:id', async(req, res)=>{
+            const id = req.params.id
+            const filter = {_id: new ObjectId(id)}
+            const updateddoc = {
+                $set:{
+                    status: 'todo'
+                }
+            }
+            const result = await alltask.updateOne(filter, updateddoc)
+            res.send(result)
+        })
 
 
         // Send a ping to confirm a successful connection
